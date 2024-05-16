@@ -2,24 +2,19 @@ import json
 import getpass
 from cryptography.fernet import Fernet
 
-# Generate a key for encryption
 key = Fernet.generate_key()
 cipher_suite = Fernet(key)
 
-# Function to encrypt the password
 def encrypt_password(password):
     return cipher_suite.encrypt(password.encode())
 
-# Function to decrypt the password
 def decrypt_password(encrypted_password):
     return cipher_suite.decrypt(encrypted_password).decode()
 
-# Function to save credentials to a file
 def save_credentials(credentials):
     with open('credentials.json', 'w') as file:
         json.dump(credentials, file)
 
-# Function to load credentials from a file
 def load_credentials():
     try:
         with open('credentials.json', 'r') as file:
@@ -27,7 +22,6 @@ def load_credentials():
     except FileNotFoundError:
         return {}
 
-# Function to add a new credential
 def add_credential():
     website = input("Enter website: ")
     username = input("Enter username: ")
@@ -37,7 +31,6 @@ def add_credential():
     save_credentials(credentials)
     print("Credential added successfully!")
 
-# Function to retrieve a password
 def retrieve_password():
     website = input("Enter website: ")
     if website in credentials:
@@ -48,7 +41,6 @@ def retrieve_password():
     else:
         print("Website not found in credentials.")
 
-# Main function
 def main():
     global credentials
     credentials = load_credentials()
